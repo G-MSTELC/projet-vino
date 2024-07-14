@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche de Bouteilles{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Recherche de Bouteilles</h1>
+
+                <form method="get" action="{{ path('cellier_bouteille_search', {'cellierId': cellierId}) }}">
+                    <div class="input-group mb-3">
+                        <input type="text" name="search" value="{{ searchTerm }}" class="form-control" placeholder="Recherche...">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Rechercher</button>
+                        </div>
+                    </div>
+                </form>
+
+                {% if searchTerm is not empty %}
+                    <h3>Résultats de la recherche :</h3>
+                    {% if bouteilles|length > 0 %}
+                        <table class="table mt-3">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prix</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for bouteille in bouteilles %}
+                                    <tr>
+                                        <td>{{ bouteille.nom }}</td>
+                                        <td>{{ bouteille.prix }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>Aucune bouteille trouvée pour vos critères de recherche.</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <a href="{{ path('cellier_show', {'id': cellierId}) }}" class="btn btn-primary mb-3">Retour au Cellier</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

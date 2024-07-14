@@ -1,5 +1,199 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+    resource: ../src/Controller/
     type: attribute
+
+# Routes principales de l'application
+app_home:
+    path: /
+    controller: App\Controller\MainController::home
+
+app_main:
+    path: /main
+    controller: App\Controller\MainController::index
+
+app_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+app_logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
+app_register:
+    path: /inscription
+    controller: App\Controller\RegistrationController::register
+    methods: ['GET', 'POST']
+
+app_forgot_password:
+    path: /forgot-password
+    controller: App\Controller\PasswordForgotController::forgotPassword
+    methods: ['GET', 'POST']
+
+app_success:
+    path: /success
+    controller: App\Controller\SuccessController::index
+    
+main:
+    path: /
+    controller: App\Controller\MainController::index
+
+# Routes concernant les bouteilles
+bouteille_index:
+    path: /bouteilles
+    controller: App\Controller\BouteilleController::index
+
+bouteille_show:
+    path: /bouteilles/{id}
+    controller: App\Controller\BouteilleController::show
+    requirements:
+        id: '\d+'
+
+bouteille_create:
+    path: /bouteilles/create
+    controller: App\Controller\BouteilleController::create
+
+bouteille_edit:
+    path: /bouteilles/{id}/edit
+    controller: App\Controller\BouteilleController::edit
+    requirements:
+        id: '\d+'
+
+bouteille_delete:
+    path: /bouteilles/{id}/delete
+    controller: App\Controller\BouteilleController::delete
+    requirements:
+        id: '\d+'
+    methods: ['POST']
+
+bouteille_search:
+    path: /bouteilles/search
+    controller: App\Controller\BouteilleController::search
+
+bouteille_sorting:
+    path: /bouteilles/sorting
+    controller: App\Controller\BouteilleController::sorting
+
+# Routes concernant les celliers
+cellier_index:
+    path: /celliers
+    controller: 'App\Controller\CellierController::index'
+    methods: ['GET']
+
+cellier_create:
+    path: /cellier/create
+    controller: 'App\Controller\CellierController::create'
+    methods: ['GET', 'POST']
+
+cellier_show:
+    path: /cellier/{id}
+    controller: 'App\Controller\CellierController::show'
+    methods: ['GET']
+
+cellier_edit:
+    path: /cellier/{id}/edit
+    controller: 'App\Controller\CellierController::edit'
+    methods: ['GET', 'POST']
+
+cellier_delete:
+    path: /cellier/{id}
+    controller: 'App\Controller\CellierController::delete'
+    methods: ['POST']
+
+cellier_bouteille_search:
+    path: /celliers/{cellierId}/bouteilles/search
+    controller: 'App\Controller\CellierController::search'
+    methods: ['GET']
+
+cellier_bouteille_sorting:
+    path: /celliers/{cellierId}/bouteilles/sorting
+    controller: 'App\Controller\CellierController::sorting'
+    methods: ['GET']
+
+# Routes concernant les bouteille_celliers
+bouteille_cellier_index:
+    path: /bouteille_cellier
+    controller: App\Controller\BouteilleCellierController::index
+    methods: ['GET']
+
+bouteille_cellier_create:
+    path: /bouteille_cellier/create
+    controller: App\Controller\BouteilleCellierController::create
+    methods: ['GET', 'POST']
+
+bouteille_cellier_show:
+    path: /bouteille_cellier/{id}
+    controller: App\Controller\BouteilleCellierController::show
+    methods: ['GET']
+    requirements:
+        id: '\d+'
+
+bouteille_cellier_edit:
+    path: /bouteille_cellier/{id}/edit
+    controller: App\Controller\BouteilleCellierController::edit
+    methods: ['GET', 'POST']
+    requirements:
+        id: '\d+'
+
+bouteille_cellier_delete:
+    path: /bouteille_cellier/{id}
+    controller: App\Controller\BouteilleCellierController::delete
+    methods: ['POST']
+    requirements:
+        id: '\d+'
+
+bouteille_cellier_select_bouteille:
+    path: /cellier/{id}/select-bouteille
+    controller: App\Controller\BouteilleCellierController::selectBouteille
+    methods: ['GET']
+
+bouteille_cellier_ajouter_bouteille:
+    path: /cellier/{id}/ajouter-bouteille
+    controller: App\Controller\BouteilleCellierController::ajouterBouteille
+    methods: ['POST']
+
+# Routes pour les permissions des utilisateurs
+user_permission_index:
+    path: /admin/users
+    controller: 'App\Controller\UserPermissionController::index'
+    methods: ['GET']
+
+user_permission_edit:
+    path: /admin/users/edit/{id}
+    controller: 'App\Controller\UserPermissionController::edit'
+    methods: ['GET', 'POST']
+
+assign_role:
+    path: /admin/users/assign-role/{username}
+    controller: 'App\Controller\UserRoleController::assignRole'
+    methods: ['POST']
+
+revoke_role:
+    path: /admin/users/revoke-role/{username}
+    controller: 'App\Controller\UserRoleController::revokeRole'
+    methods: ['POST']
+
+
+# Routes concernant les profils utilisateurs
+profil_show:
+    path: /profil/{id}
+    controller: 'App\Controller\UserController::show'
+    requirements:
+        id: '\d+'# Routes pour les utilisateurs (CRUD)
+admin_users_create:
+    path: /admin/users/create
+    controller: 'App\Controller\UserController::create'
+    methods: ['GET', 'POST']
+
+admin_users_edit:
+    path: /admin/users/{id}/edit
+    controller: 'App\Controller\UserController::edit'
+    methods: ['GET', 'POST']
+    requirements:
+        id: '\d+'
+
+admin_users_delete:
+    path: /admin/users/{id}/delete
+    controller: 'App\Controller\UserController::delete'
+    methods: ['POST']
+    requirements:
+        id: '\d+'

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un cellier{% endblock %}
+
+{% block body %}
+<main class="form-border nav-margin">
+    <h1 class="form-h1">
+        Modifier un cellier
+    </h1>
+    <div class="form-container">
+        <form method="post" id="modifierCellier">
+            {{ form_start(form) }}
+            <div class="form-input-container">
+                {{ form_label(form.nom, 'Nom du cellier') }}
+                {{ form_widget(form.nom) }}
+                {% if form_errors(form.nom) %}
+                    <div>{{ form_errors(form.nom) }}</div>
+                {% endif %}
+            </div>
+            <div class="form-button">
+                <button type="submit" form="modifierCellier" class="btn-submit">Mettre à jour</button>
+            </div>
+            {{ form_end(form) }}
+        </form>
+    </div>
+</main>
+{% endblock %}

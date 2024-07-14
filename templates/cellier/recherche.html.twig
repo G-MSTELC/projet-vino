@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche dans le cellier{% endblock %}
+
+{% block body %}
+    <header>
+        {% if cellier is not null and cellier.id is defined %}
+            <a href="{{ path('cellier_show', {'id': cellier.id}) }}" class="btn-arrow-top">
+                <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.4247 7C17.977 7 18.4247 7.44772 18.4247 8C18.4247 8.55228 17.977 9 17.4247 9L17.4247 7ZM0.498398 8.70711C0.107874 8.31658 0.107874 7.68342 0.498398 7.29289L6.86236 0.928933C7.25288 0.538409 7.88605 0.538409 8.27657 0.928933C8.6671 1.31946 8.6671 1.95262 8.27657 2.34315L2.61972 8L8.27657 13.6569C8.6671 14.0474 8.6671 14.6805 8.27657 15.0711C7.88605 15.4616 7.25288 15.4616 6.86236 15.0711L0.498398 8.70711ZM17.4247 9L1.20551 9L1.20551 7L17.4247 7L17.4247 9Z" fill="black"/>
+                </svg>
+                Retour au cellier
+            </a>
+        {% else %}
+            <a href="{{ path('cellier_index') }}" class="btn-arrow-top">
+                <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.4247 7C17.977 7 18.4247 7.44772 18.4247 8C18.4247 8.55228 17.977 9 17.4247 9L17.4247 7ZM0.498398 8.70711C0.107874 8.31658 0.107874 7.68342 0.498398 7.29289L6.86236 0.928933C7.25288 0.538409 7.88605 0.538409 8.27657 0.928933C8.6671 1.31946 8.6671 1.95262 8.27657 2.34315L2.61972 8L8.27657 13.6569C8.6671 14.0474 8.6671 14.6805 8.27657 15.0711C7.88605 15.4616 7.25288 15.4616 6.86236 15.0711L0.498398 8.70711ZM17.4247 9L1.20551 9L1.20551 7L17.4247 7L17.4247 9Z" fill="black"/>
+                </svg>
+                Retour aux celliers
+            </a>
+        {% endif %}
+    </header>
+
+    <section>
+        <h1>Recherche dans le cellier "{{ cellier.nom }}"</h1>
+
+        {# Affichage du formulaire de recherche #}
+        {{ form_start(form, { 'attr': { 'method': 'POST' } }) }}
+        {{ form_row(form.search) }}
+        {{ form_row(form.sort) }}
+        {{ form_row(form.price) }}
+        <button type="submit" class="btn-primary">Rechercher</button>
+        {{ form_end(form) }}
+
+        {# Affichage des résultats de la recherche #}
+        {% if resultats is not null %}
+            <h2>Résultats de la recherche</h2>
+            <ul>
+                {% for bouteille in resultats %}
+                    <li>{{ bouteille.nom }} - {{ bouteille.annee }}</li>
+                {% endfor %}
+            </ul>
+
+            {# Affichage de la pagination #}
+            {{ knp_pagination_render(resultats) }}
+        {% elseif form.vars.submitted %}
+            <p>Aucun résultat trouvé pour votre recherche.</p>
+        {% endif %}
+    </section>
+{% endblock %}

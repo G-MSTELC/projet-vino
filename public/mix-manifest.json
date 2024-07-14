@@ -1,0 +1,13 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/bottleCounter.js": "/js/bottleCounter.js",
+    "/js/bottleCounterModal.js": "/js/bottleCounterModal.js",
+    "/js/carousel.js": "/js/carousel.js",
+    "/js/filterSlider.js": "/js/filterSlider.js",
+    "/js/filterTag.js": "/js/filterTag.js",
+    "/js/modalAjouter.js": "/js/modalAjouter.js",
+    "/js/modalDeplacer.js": "/js/modalDeplacer.js",
+    "/js/modalSupprimer.js": "/js/modalSupprimer.js",
+    "/js/sortBottles.js": "/js/sortBottles.js",
+    "/css/app.css": "/css/app.css"
+}

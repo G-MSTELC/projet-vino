@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats de la recherche{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Résultats de la recherche</h1>
+
+    {% if bouteilles is empty %}
+        <div class="alert alert-warning" role="alert">
+            Aucune bouteille trouvée.
+        </div>
+    {% else %}
+        <div class="list-group">
+            {% for bouteille in bouteilles %}
+                <a href="{{ path('bouteille_show', {id: bouteille.id}) }}" class="list-group-item list-group-item-action">
+                    {{ bouteille.nom }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

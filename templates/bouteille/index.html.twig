@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des bouteilles{% endblock %}
+
+{% block body %}
+<header>
+    <h1>Ajouter une bouteille</h1>
+</header>
+<main class="nav-margin">
+    <section class="form-ajouter-bouteille">
+        <div class="form-container">
+            <form action="{{ path('bouteille_search') }}" method="GET">
+                <div class="form-input-container">
+                    <label for="search">Recherche</label>
+                    <input type="text" id="search" name="search" value="{{ app.request.query.get('search') }}">
+                </div>
+            </form>
+        </div>
+        <div class="link link-right">
+            <a href="{{ path('bouteille_create') }}">Ajouter une bouteille</a>
+        </div>
+        
+        <div class="form-container">
+            <form action="{{ path('bouteille_sorting') }}" method="GET" id="filterForm">
+                <hr>
+                <details>
+                    <summary>Filtrer</summary>
+                    <div class="form-input-container">
+                        <label for="couleur">Couleur</label>
+                        <select name="couleur" id="couleur">
+                            <option value="">Choisir les options</option>
+                            <option value="blanc" {{ app.request.query.get('couleur') == 'blanc' ? 'selected' : '' }}>Blanc</option>
+                            <option value="rouge" {{ app.request.query.get('couleur') == 'rouge' ? 'selected' : '' }}>Rouge</option>
+                            <option value="rose" {{ app.request.query.get('couleur') == 'rose' ? 'selected' : '' }}>Rosé</option>
+                        </select>
+                    </div>
+                    <div class="form-input-container">
+                        <label for="format">Format</label>
+                        <select name="format" id="format">
+                            <option value="">Choisir les options</option>
+                            <option value="750" {{ app.request.query.get('format') == '750' ? 'selected' : '' }}>750ml</option>
+                            <option value="1500" {{ app.request.query.get('format') == '1500' ? 'selected' : '' }}>1500ml</option>
+                        </select>
+                    </div>
+                    <div class="form-input-container">
+                        <label for="prix_min">Prix minimum</label>
+                        <input id="prix_min" type="number" name="prix_min" value="{{ app.request.query.get('prix_min') }}">
+                    </div>
+                    <div class="form-input-container">
+                        <label for="prix_max">Prix maximum</label>
+                        <input id="prix_max" type="number" name="prix_max" value="{{ app.request.query.get('prix_max') }}">
+                    </div>
+                    <div class="form-input-container">
+                        <label for="pays">Pays</label>
+                        <select name="pays" id="pays">
+                            <option value="">Choisir les options</option>
+                            <option value="canada" {{ app.request.query.get('pays') == 'canada' ? 'selected' : '' }}>Canada</option>
+                            <option value="usa" {{ app.request.query.get('pays') == 'usa' ? 'selected' : '' }}>États-Unis</option>
+                            <option value="espagne" {{ app.request.query.get('pays') == 'espagne' ? 'selected' : '' }}>Espagne</option>
+                            <option value="france" {{ app.request.query.get('pays') == 'france' ? 'selected' : '' }}>France</option>
+                            <option value="italie" {{ app.request.query.get('pays') == 'italie' ? 'selected' : '' }}>Italie</option>
+                        </select>
+                    </div>
+                    <div class="form-input-container">
+                        <label for="region">Région</label>
+                        <select name="region" id="region">
+                            <option value="">Choisir les options</option>
+                            <option value="quebec" {{ app.request.query.get('region') == 'quebec' ? 'selected' : '' }}>Québec</option>
+                            <option value="bordeaux" {{ app.request.query.get('region') == 'bordeaux' ? 'selected' : '' }}>Bordeaux</option>
+                        </select>
+                    </div>
+                    <div class="form-input-container">
+                        <label for="millesime">Millésime</label>
+                        <select name="millesime" id="millesime">
+                            <option value="">Choisir les options</option>
+                            <option value="2001" {{ app.request.query.get('millesime') == '2001' ? 'selected' : '' }}>2001</option>
+                            <option value="2010" {{ app.request.query.get('millesime') == '2010' ? 'selected' : '' }}>2010</option>
+                        </select>
+                    </div>
+                    <div class="form-input-container">
+                        <label for="cepage">Cepage</label>
+                        <select name="cepage" id="cepage">
+                            <option value="">Choisir les options</option>
+                            <option value="cabernet-sauv" {{ app.request.query.get('cepage') == 'cabernet-sauv' ? 'selected' : '' }}>Cabernet-Sauvignon</option>
+                            <option value="merlot" {{ app.request.query.get('cepage') == 'merlot' ? 'selected' : '' }}>Merlot</option>
+                        </select>
+                    </div>
+                </details>
+                <div class="form-input-container">
+                    <label for="sort">Trier par</label>
+                    <select name="sort" id="sort" onchange="document.getElementById('filterForm').submit()">
+                        <option value="defaut" {{ app.request.query.get('sort') == 'defaut' ? 'selected' : '' }}>Défaut</option>
+                        <option value="name-asc" {{ app.request.query.get('sort') == 'name-asc' ? 'selected' : '' }}>Nom (A-Z)</option>
+                        <option value="name-desc" {{ app.request.query.get('sort') == 'name-desc' ? 'selected' : '' }}>Nom (Z-A)</option>
+                        <option value="price-asc" {{ app.request.query.get('sort') == 'price-asc' ? 'selected' : '' }}>Prix ($-$$$)</option>
+                        <option value="price-desc" {{ app.request.query.get('sort') == 'price-desc' ? 'selected' : '' }}>Prix ($$$-$)</option>
+                    </select>
+                </div>
+                <button type="submit">Appliquer les filtres</button>
+            </form>
+        </div>
+    </section>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Couleur</th>
+                <th>Format</th>
+                <th>Prix</th>
+                <th>Pays</th>
+                <th>Région</th>
+                <th>Millésime</th>
+                <th>Cépage</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bouteille in pagination %}
+                <tr>
+                    <td>{{ bouteille.nom }}</td>
+                    <td>{{ bouteille.couleur }}</td>
+                    <td>{{ bouteille.format }}</td>
+                    <td>{{ bouteille.prix }}</td>
+                    <td>{{ bouteille.pays }}</td>
+                    <td>{{ bouteille.region }}</td>
+                    <td>{{ bouteille.millesime }}</td>
+                    <td>{{ bouteille.cepage }}</td>
+                    <td>
+                        <a href="{{ path('bouteille_show', {'id': bouteille.id}) }}">Voir</a>
+                        <a href="{{ path('bouteille_edit', {'id': bouteille.id}) }}">Éditer</a>
+                        <a href="{{ path('bouteille_delete', {'id': bouteille.id}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10">Aucune bouteille trouvée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        {% if pagination.currentPageNumber > 1 %}
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'page': pagination.currentPageNumber - 1})) }}">Précédent</a>
+        {% endif %}
+
+        {% for page in range(1, pagination.pageCount) %}
+            {% if page == pagination.currentPageNumber %}
+                <span>{{ page }}</span>
+            {% else %}
+                <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'page': page})) }}">{{ page }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if pagination.currentPageNumber < pagination.pageCount %}
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'page': pagination.currentPageNumber + 1})) }}">Suivant</a>
+        {% endif %}
+    </div>
+</main>
+<footer>
+    L'abus d'alcool est dangereux pour la santé.
+</footer>
+{% endblock %}

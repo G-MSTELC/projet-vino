@@ -1,0 +1,25 @@
+{# Modification du nom d'une liste d'achat et suppression #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<main class="form-border nav-margin">
+    <h1 class="form-h1">
+        Modifier une liste
+    </h1>
+    <div class="form-container">
+        {{ form_start(form) }}
+        <div class="form-input-container">
+            {{ form_label(form.nom, 'Nom de la liste') }}
+            {{ form_widget(form.nom, { value: liste.nom }) }}
+            {% if form_errors(form.nom) %}
+                <div>{{ form_errors(form.nom) }}</div>
+            {% endif %}
+        </div>
+        <div class="form-button">
+            <button type="submit" class="btn-submit">Mettre à jour</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</main>
+{% endblock %}

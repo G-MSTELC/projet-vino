@@ -1,0 +1,78 @@
+{# templates/liste/show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la Liste{% endblock %}
+
+{% block body %}
+    <header>
+        <a href="{{ path('liste_index') }}" class="btn-arrow-top">
+            <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.4247 7C17.977 7 18.4247 7.44772 18.4247 8C18.4247 8.55228 17.977 9 17.4247 9L17.4247 7ZM0.498398 8.70711C0.107874 8.31658 0.107874 7.68342 0.498398 7.29289L6.86236 0.928933C7.25288 0.538409 7.88605 0.538409 8.27657 0.928933C8.6671 1.31946 8.6671 1.95262 8.27657 2.34315L2.61972 8L8.27657 13.6569C8.6671 14.0474 8.6671 14.6805 8.27657 15.0711C7.88605 15.4616 7.25288 15.4616 6.86236 15.0711L0.498398 8.70711ZM17.4247 9L1.20551 9L1.20551 7L17.4247 7L17.4247 9Z" fill="black"/>
+            </svg>
+            Retour à la liste des listes
+        </a>
+    </header>
+
+    <main class="nav-margin">
+        <h1>{{ liste.nom }}
+            <a href="{{ path('liste_edit', { id: liste.id }) }}">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 17.25V22H4.75L18.7925 7.9575L14.0425 3.2075L0 17.25ZM21.71 5.04C22.1 4.65 22.1 4.02 21.71 3.63L18.37 0.29C17.98 -0.1 17.35 -0.1 16.96 0.29L14.79 2.46L19.54 7.21L21.71 5.04Z" fill="black"/>
+                </svg>
+            </a>
+        </h1>
+
+        <div>
+            {% if bouteilles|length > 0 %}
+                <h2>Bouteilles dans la Liste :</h2>
+                {% for bouteille in bouteilles %}
+                    <section class="card-cellier">
+                        <a href="{{ path('bouteille_show', { id: bouteille.id }) }}">
+                            <div class="card-container">
+                                <div class="card-content-left">
+                                    <div class="card-image">
+                                        {% if bouteille.image %}
+                                            <img src="{{ bouteille.image }}" alt="{{ bouteille.nom }}">
+                                        {% else %}
+                                            <img src="{{ asset('images/vino_logo.png') }}" alt="{{ bouteille.nom }}">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="card-content-right">
+                                    <h2>{{ bouteille.nom }}</h2>
+                                    <p>{{ bouteille.description }}</p>
+                                    <p>{{ bouteille.format }}</p>
+                                    <div class="card-container-stats">
+                                        <div class="card-container-price">
+                                            <div>
+                                                <span>{{ bouteille.prix|number_format(2) }} $</span>
+                                            </div>
+                                        </div>
+                                        <div class="card-container-qt">
+                                            <div>
+                                                <span>{{ bouteille.qte }}</span>
+                                                <svg width="12" height="30" viewBox="0 0 12 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M5.64 1.25C6.38 1.25 6.94 1.33 7.29 1.4V11.01C7.29 11.26 7.45 11.47 7.68 11.54C7.78 11.57 7.89 11.61 7.99 11.65C8.16 11.72 8.33 11.81 8.49 11.91C8.65 12.01 8.79 12.12 8.93 12.25C9.61 12.86 10.03 13.75 10.03 14.71V24.65C10.03 25.5 9.69 26.33 9.09 26.93C9.04 26.98 8.99 27.03 8.93 27.07C8.79 27.2 8.64 27.31 8.48 27.4C8.32 27.5 8.14 27.59 7.95 27.65C7.59 27.8 7.2 27.87 6.81 27.87H4.47C3.61 27.87 2.8 27.54 2.19 26.93C1.58 26.32 1.25 25.5 1.25 24.65V14.71C1.25 13.26 2.22 11.96 3.6 11.54C3.84 11.47 4 11.26 4 11.01V1.4C4.34 1.33 4.91 1.25 5.64 1.25ZM5.64 0C4.74 0 4.07 0.11 3.75 0.18L2.75 0.39V10.52C1.1 11.24 0 12.89 0 14.71V24.65C0 25.83 0.48 26.98 1.31 27.81C2.15 28.65 3.28 29.12 4.47 29.12H6.81C7.36 29.12 7.89 29.02 8.38 28.82C8.63 28.74 8.88 28.62 9.12 28.47C9.33 28.35 9.53 28.2 9.72 28.04C9.83 27.95 9.92 27.87 9.97 27.81C10.8 26.98 11.28 25.83 11.28 24.65V14.71C11.28 13.42 10.73 12.18 9.76 11.32C9.57 11.15 9.37 10.99 9.15 10.85C8.95 10.72 8.74 10.61 8.54 10.53V0.37L7.54 0.17C7.14 0.0900001 6.49 0 5.64 0Z" fill="white"/>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="card-container-btn">
+                                        <a href="{{ path('bouteille_list_delete', { bouteille: bouteille.id, liste: liste.id }) }}" class="btn-action-small">
+                                            <svg width="17" height="22" viewBox="0 0 17 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1.94812 19.25C1.94812 20.22 2.73098 21 3.69495 21H12.8027C13.7737 21 14.5481 20.22 14.5481 19.25V5.5H1.94812V19.25ZM16.2981 2.75H12.1234L11.3116 1.43C11.1446 1.16 10.849 1 10.5297 1H5.96793C5.64864 1 5.35307 1.16 5.18605 1.43L4.3743 2.75H0.199585C0.0890893 2.75 0 2.83909 0 2.94958C0 3.06008 0.0890893 3.14917 0.199585 3.14917H1.28926L2.10101 19.25C2.13032 19.7208 2.51215 20.0997 3.00364 20.2H12.493C12.9845 20.0997 13.3663 19.7208 13.3956 19.25L14.2074 3.14917H15.2971C15.4076 3.14917 15.4967 3.06008 15.4967 2.94958C15.4967 2.83909 15.4076 2.75 15.2971 2.75H16.2981Z" fill="black"/>
+                                            </svg>
+                                            Retirer de la Liste
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </section>
+                {% endfor %}
+            {% else %}
+                <p>Aucune bouteille dans cette liste pour le moment.</p>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}

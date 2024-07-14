@@ -1,0 +1,22 @@
+{# templates/admin/user/revoke_role.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Révoquer un rôle{% endblock %}
+
+{% block body %}
+    <h1>Révoquer un rôle à {{ username }}</h1>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    {% if success %}
+        <div class="alert alert-success">{{ success }}</div>
+    {% endif %}
+
+    <form action="{{ path('revoke_role', {'username': username}) }}" method="post">
+        <label for="role">Rôle :</label>
+        <input type="text" id="role" name="role" required>
+        <button type="submit" class="btn btn-danger">Révoquer</button>
+    </form>
+{% endblock %}

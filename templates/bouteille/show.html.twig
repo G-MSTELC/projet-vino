@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %}Détails de la bouteille{{ bouteille.nom }}{% endblock %}
+{% block body %}
+<body>
+    <header>
+        Détails de la bouteille {{ bouteille.nom }}
+    </header>
+    <main class="nav-margin">
+        <section class="card-bouteille">
+            <picture>
+                <img src="{{ bouteille.srcImage }}" alt="{{ bouteille.nom }}">
+            </picture>
+            <div class="card-bouteille-content">
+                <div class="card-bouteille-info">
+                    <h2>{{ bouteille.nom }}</h2>
+                    <span>{{ bouteille.type }} | {{ bouteille.format }} | {{ bouteille.pays }}</span>
+                    <p>{{ bouteille.prix }} $</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+{% endblock %}

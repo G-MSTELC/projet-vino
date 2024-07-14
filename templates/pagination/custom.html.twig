@@ -1,0 +1,20 @@
+{# templates/pagination/custom.html.twig #}
+<ul class="pagination">
+    {% for element in pagination %}
+        {# Condition pour les liens #}
+        {% if element is same as('string') %}
+            <li class="disabled">{{ element }}</li>
+        {% endif %}
+
+        {# Condition pour les pages actives #}
+        {% if element is iterable %}
+            {% for page, url in element %}
+                {% if page == pagination.getCurrentPage %}
+                    <li class="active"><span>{{ page }}</span></li>
+                {% else %}
+                    <li><a href="{{ url }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</ul>

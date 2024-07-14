@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trier et Filtrer Bouteilles
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<header>
+					<a href="{{ path('cellier_show', {'id': cellierId}) }}" class="btn-arrow-top">
+						Retour au cellier
+					</a>
+				</header>
+
+				<section>
+					<h1>Trier et Filtrer Bouteilles</h1>
+
+					{# Formulaire de tri et de filtre #}
+					<form method="get" action="{{ path('cellier_bouteille_sorting', {'cellierId': cellierId}) }}">
+						<div class="form-row">
+							<div class="col-md-4">
+								<label for="sortingCriteria">Trier par :</label>
+								<select name="sortingCriteria" id="sortingCriteria" class="form-control">
+									<option value="name_asc" {% if sortingCriteria == 'name_asc' %} selected {% endif %}>Nom (A-Z)</option>
+									<option value="name_desc" {% if sortingCriteria == 'name_desc' %} selected {% endif %}>Nom (Z-A)</option>
+									{# Ajoutez d'autres options de tri ici #}
+								</select>
+							</div>
+
+							<div class="col-md-4">
+								<label for="couleur">Couleur</label>
+								<select name="filters[couleur]" id="couleur" class="form-control">
+									<option value="">Filtrer par Type de vin</option>
+									<option value="blanc" {{ app.request.query.get('filters[couleur]') == 'blanc' ? 'selected' : '' }}>Blanc</option>
+									<option value="rouge" {{ app.request.query.get('filters[couleur]') == 'rouge' ? 'selected' : '' }}>Rouge</option>
+									<option value="rose" {{ app.request.query.get('filters[couleur]') == 'rose' ? 'selected' : '' }}>Rosé</option>
+								</select>
+							</div>
+							<div class="col-md-4">
+								<label for="millesime">Millésime</label>
+								<select name="filters[millesime]" id="millesime" class="form-control">
+									<option value="">Choisir les options</option>
+									<option value="2001" {{ app.request.query.get('millesime') == '2001' ? 'selected' : '' }}>2001</option>
+									<option value="2010" {{ app.request.query.get('millesime') == '2010' ? 'selected' : '' }}>2010</option>
+								</select>
+							</div>
+
+							<div class="col-md-4">
+								<label for="region">Filtrer par Région :</label>
+								<input type="text" name="filters[region]" class="form-control" placeholder="Région" value="{{ filters.region ?? '' }}">
+							</div>
+
+							<div class="col-md-4">
+								<label for="pays">Filtrer par Pays :</label>
+								<input type="text" name="filters[pays]" class="form-control" placeholder="Pays" value="{{ filters.pays ?? '' }}">
+							</div>
+
+							<div class="col-md-4">
+								<label for="prix_min">Filtrer par Prix minimum :</label>
+								<input type="number" name="filters[prix_min]" class="form-control" placeholder="Prix minimum" value="{{ filters.prix_min ?? '' }}">
+							</div>
+
+							<div class="col-md-4">
+								<label for="prix_max">Filtrer par Prix maximum :</label>
+								<input type="number" name="filters[prix_max]" class="form-control" placeholder="Prix maximum" value="{{ filters.prix_max ?? '' }}">
+							</div>
+
+							<div class="col-md-4 mt-3">
+								<button type="submit" class="btn btn-primary">Trier et Filtrer</button>
+							</div>
+						</div>
+					</form>
+
+					{# Affichage des résultats de tri #}
+					{% if bouteilles is not empty %}
+						<h2>Résultats du tri</h2>
+						<ul>
+							{% for bouteille in bouteilles %}
+								<li>{{ bouteille.nom }}</li>
+							{% endfor %}
+						</ul>
+					{% elseif searchTerm is not empty %}
+						<p>Aucun résultat trouvé pour votre tri.</p>
+					{% endif %}
+				</section>
+			</div>
+		</div>
+
+		<div class="row mt-3">
+			<div class="col-md-8">
+				<a href="{{ path('cellier_show', {'id': cellierId}) }}" class="btn btn-secondary">Retour au Cellier</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

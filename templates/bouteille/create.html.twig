@@ -1,0 +1,148 @@
+{# templates/bouteille/create.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ajouter une bouteille</h1>
+
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.nom, 'Nom') }}
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.nom) }}
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.prix, 'Prix') }}
+            {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.prix) }}
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.pays, 'Pays') }}
+            {{ form_widget(form.pays, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.pays) }}
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.format, 'Format') }}
+            {{ form_widget(form.format, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.format) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.lienProduit, 'Lien Produit') }}
+            {{ form_widget(form.lienProduit, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.lienProduit) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.srcImage, 'Source Image') }}
+            {{ form_widget(form.srcImage, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.srcImage) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.srcsetImage, 'Source Set Image') }}
+            {{ form_widget(form.srcsetImage, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.srcsetImage) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.designation, 'Désignation') }}
+            {{ form_widget(form.designation, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.designation) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.degre, 'Degré') }}
+            {{ form_widget(form.degre, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.degre) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.tauxSucre, 'Taux de Sucre') }}
+            {{ form_widget(form.tauxSucre, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.tauxSucre) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.couleur, 'Couleur') }}
+            {{ form_widget(form.couleur, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.couleur) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.producteur, 'Producteur') }}
+            {{ form_widget(form.producteur, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.producteur) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.agentPromotion, 'Agent de Promotion') }}
+            {{ form_widget(form.agentPromotion, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.agentPromotion) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.type, 'Type') }}
+            {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.type) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.millesime, 'Millésime') }}
+            {{ form_widget(form.millesime, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.millesime) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.cepage, 'Cépage') }}
+            {{ form_widget(form.cepage, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.cepage) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.region, 'Région') }}
+            {{ form_widget(form.region, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.region) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.produitQuebec, 'Produit Québec') }}
+            {{ form_widget(form.produitQuebec, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.produitQuebec) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.pastilleGoutTitre, 'Pastille Goût Titre') }}
+            {{ form_widget(form.pastilleGoutTitre, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.pastilleGoutTitre) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.pastilleImageSrc, 'Pastille Image Source') }}
+            {{ form_widget(form.pastilleImageSrc, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.pastilleImageSrc) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.createdAt, 'Créé le') }}
+            {{ form_widget(form.createdAt, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.createdAt) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.updatedAt, 'Mis à jour le') }}
+            {{ form_widget(form.updatedAt, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.updatedAt) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.user, 'Utilisateur') }}
+            {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.user) }}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    {{ form_end(form) }}
+{% endblock %}

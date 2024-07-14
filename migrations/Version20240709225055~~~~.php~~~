@@ -1,0 +1,70 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+final class Version20240709225055 extends AbstractMigration
+{
+    public function getDescription(): string
+    {
+        return '';
+    }
+
+    public function up(Schema $schema): void
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE bouteille CHANGE id id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, CHANGE user_id user_id BIGINT NOT NULL, CHANGE prix prix NUMERIC(10, 2) NOT NULL, CHANGE pays pays VARCHAR(255) DEFAULT NULL, CHANGE format format VARCHAR(255) DEFAULT NULL, CHANGE lien_produit lien_produit VARCHAR(255) DEFAULT NULL, CHANGE src_image src_image VARCHAR(255) DEFAULT NULL, CHANGE srcset_image srcset_image VARCHAR(255) DEFAULT NULL, CHANGE designation designation VARCHAR(255) DEFAULT NULL, CHANGE degre degre VARCHAR(255) DEFAULT NULL, CHANGE taux_sucre taux_sucre VARCHAR(255) DEFAULT NULL, CHANGE couleur couleur VARCHAR(255) DEFAULT NULL, CHANGE producteur producteur VARCHAR(255) DEFAULT NULL, CHANGE agent_promotion agent_promotion VARCHAR(255) DEFAULT NULL, CHANGE type type VARCHAR(255) DEFAULT NULL, CHANGE millesime millesime VARCHAR(255) DEFAULT NULL, CHANGE cepage cepage VARCHAR(255) DEFAULT NULL, CHANGE region region VARCHAR(255) DEFAULT NULL, CHANGE produit_quebec produit_quebec TINYINT(1) DEFAULT NULL, CHANGE pastille_gout_titre pastille_gout_titre VARCHAR(255) DEFAULT NULL, CHANGE pastille_image_src pastille_image_src VARCHAR(255) DEFAULT NULL, CHANGE created_at created_at DATETIME DEFAULT NULL, CHANGE updated_at updated_at DATETIME DEFAULT NULL');
+        $this->addSql('ALTER TABLE bouteille ADD CONSTRAINT FK_11157C4CA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE bouteille_cellier DROP FOREIGN KEY FK_9C971BDFA76ED395');
+        $this->addSql('DROP INDEX IDX_9C971BDFA76ED395 ON bouteille_cellier');
+        $this->addSql('ALTER TABLE bouteille_cellier DROP user_id, CHANGE id id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, CHANGE bouteille_id bouteille_id BIGINT UNSIGNED NOT NULL, CHANGE cellier_id cellier_id BIGINT UNSIGNED NOT NULL');
+        $this->addSql('ALTER TABLE bouteille_personnalisee DROP FOREIGN KEY FK_96437F9FA76ED395');
+        $this->addSql('ALTER TABLE bouteille_personnalisee CHANGE created_at created_at DATETIME DEFAULT NULL, CHANGE updated_at updated_at DATETIME DEFAULT NULL, CHANGE nom nom VARCHAR(255) DEFAULT NULL, CHANGE pays pays VARCHAR(255) DEFAULT NULL, CHANGE region region VARCHAR(255) DEFAULT NULL, CHANGE couleur couleur VARCHAR(255) DEFAULT NULL, CHANGE format format VARCHAR(255) DEFAULT NULL, CHANGE prix prix NUMERIC(8, 2) DEFAULT NULL, CHANGE producteur producteur VARCHAR(255) DEFAULT NULL, CHANGE millesime millesime SMALLINT DEFAULT NULL, CHANGE cepage cepage VARCHAR(255) DEFAULT NULL, CHANGE taux_sucre taux_sucre VARCHAR(255) DEFAULT NULL, CHANGE degre degre VARCHAR(255) DEFAULT NULL, CHANGE type type VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE bouteille_personnalisee ADD CONSTRAINT FK_96437F9FA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE cellier DROP FOREIGN KEY FK_B3BEBA45A76ED395');
+        $this->addSql('ALTER TABLE cellier DROP created_at, DROP updated_at, CHANGE id id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, CHANGE user_id user_id BIGINT NOT NULL, CHANGE prix_total prix_total NUMERIC(10, 2) DEFAULT NULL');
+        $this->addSql('ALTER TABLE cellier ADD CONSTRAINT FK_B3BEBA45A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE commentaire DROP FOREIGN KEY FK_67F068BCBF396750');
+        $this->addSql('ALTER TABLE commentaire DROP FOREIGN KEY FK_67F068BCA76ED395');
+        $this->addSql('ALTER TABLE commentaire DROP prix_total, CHANGE bouteille_id bouteille_id BIGINT UNSIGNED NOT NULL, CHANGE user_id user_id BIGINT NOT NULL, CHANGE created_at created_at DATETIME DEFAULT NULL, CHANGE updated_at updated_at DATETIME DEFAULT NULL, CHANGE content content LONGTEXT DEFAULT NULL');
+        $this->addSql('ALTER TABLE commentaire RENAME INDEX fk_67f068bc1e7650a TO IDX_67F068BCF1966394');
+        $this->addSql('ALTER TABLE liste DROP FOREIGN KEY FK_FCF22AF4A76ED395');
+        $this->addSql('ALTER TABLE liste CHANGE id id INT AUTO_INCREMENT NOT NULL, CHANGE created_at created_at DATETIME DEFAULT NULL, CHANGE updated_at updated_at DATETIME DEFAULT NULL');
+        $this->addSql('ALTER TABLE liste ADD CONSTRAINT FK_FCF22AF4A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE user CHANGE roles roles JSON NOT NULL, CHANGE created_at created_at DATETIME DEFAULT NULL, CHANGE updated_at updated_at DATETIME DEFAULT NULL, CHANGE reset_token reset_token VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE messenger_messages CHANGE delivered_at delivered_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\'');
+    }
+
+    public function down(Schema $schema): void
+    {
+        // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE bouteille DROP FOREIGN KEY FK_11157C4CA76ED395');
+        $this->addSql('ALTER TABLE bouteille CHANGE id id BIGINT AUTO_INCREMENT NOT NULL, CHANGE user_id user_id BIGINT DEFAULT NULL, CHANGE prix prix NUMERIC(7, 2) NOT NULL, CHANGE pays pays VARCHAR(255) NOT NULL, CHANGE format format VARCHAR(255) NOT NULL, CHANGE lien_produit lien_produit VARCHAR(255) NOT NULL, CHANGE src_image src_image VARCHAR(512) NOT NULL, CHANGE srcset_image srcset_image VARCHAR(512) NOT NULL, CHANGE designation designation VARCHAR(255) NOT NULL, CHANGE degre degre VARCHAR(255) DEFAULT \'NULL\', CHANGE taux_sucre taux_sucre VARCHAR(255) DEFAULT \'NULL\', CHANGE couleur couleur VARCHAR(255) DEFAULT \'NULL\', CHANGE producteur producteur VARCHAR(255) DEFAULT \'NULL\', CHANGE agent_promotion agent_promotion VARCHAR(255) DEFAULT \'NULL\', CHANGE type type VARCHAR(255) DEFAULT \'NULL\', CHANGE millesime millesime VARCHAR(255) DEFAULT \'NULL\', CHANGE cepage cepage VARCHAR(255) DEFAULT \'NULL\', CHANGE region region VARCHAR(255) DEFAULT \'NULL\', CHANGE produit_quebec produit_quebec VARCHAR(255) DEFAULT \'NULL\', CHANGE pastille_gout_titre pastille_gout_titre VARCHAR(255) DEFAULT \'NULL\', CHANGE pastille_image_src pastille_image_src VARCHAR(512) DEFAULT \'NULL\', CHANGE created_at created_at DATETIME DEFAULT \'NULL\', CHANGE updated_at updated_at DATETIME DEFAULT \'NULL\'');
+        $this->addSql('ALTER TABLE bouteille_cellier ADD user_id BIGINT DEFAULT NULL, CHANGE id id BIGINT AUTO_INCREMENT NOT NULL, CHANGE cellier_id cellier_id BIGINT DEFAULT NULL, CHANGE bouteille_id bouteille_id BIGINT DEFAULT NULL');
+        $this->addSql('ALTER TABLE bouteille_cellier ADD CONSTRAINT FK_9C971BDFA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('CREATE INDEX IDX_9C971BDFA76ED395 ON bouteille_cellier (user_id)');
+        $this->addSql('ALTER TABLE bouteille_personnalisee DROP FOREIGN KEY FK_96437F9FA76ED395');
+        $this->addSql('ALTER TABLE bouteille_personnalisee CHANGE created_at created_at DATETIME DEFAULT \'NULL\', CHANGE updated_at updated_at DATETIME DEFAULT \'NULL\', CHANGE nom nom VARCHAR(255) NOT NULL, CHANGE pays pays VARCHAR(255) NOT NULL, CHANGE region region VARCHAR(255) NOT NULL, CHANGE couleur couleur VARCHAR(255) NOT NULL, CHANGE format format VARCHAR(255) NOT NULL, CHANGE prix prix NUMERIC(8, 2) NOT NULL, CHANGE producteur producteur VARCHAR(255) NOT NULL, CHANGE millesime millesime SMALLINT NOT NULL, CHANGE cepage cepage VARCHAR(255) NOT NULL, CHANGE taux_sucre taux_sucre VARCHAR(255) NOT NULL, CHANGE degre degre VARCHAR(255) NOT NULL, CHANGE type type VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE bouteille_personnalisee ADD CONSTRAINT FK_96437F9FA76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE cellier DROP FOREIGN KEY FK_B3BEBA45A76ED395');
+        $this->addSql('ALTER TABLE cellier ADD created_at DATETIME DEFAULT \'NULL\', ADD updated_at DATETIME DEFAULT \'NULL\', CHANGE id id BIGINT AUTO_INCREMENT NOT NULL, CHANGE user_id user_id BIGINT DEFAULT NULL, CHANGE prix_total prix_total NUMERIC(10, 2) DEFAULT \'0.00\' NOT NULL');
+        $this->addSql('ALTER TABLE cellier ADD CONSTRAINT FK_B3BEBA45A76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE commentaire DROP FOREIGN KEY FK_67F068BCA76ED395');
+        $this->addSql('ALTER TABLE commentaire ADD prix_total NUMERIC(10, 2) NOT NULL, CHANGE bouteille_id bouteille_id BIGINT DEFAULT NULL, CHANGE user_id user_id BIGINT DEFAULT NULL, CHANGE created_at created_at DATETIME DEFAULT \'NULL\', CHANGE updated_at updated_at DATETIME DEFAULT \'NULL\', CHANGE content content LONGTEXT NOT NULL');
+        $this->addSql('ALTER TABLE commentaire ADD CONSTRAINT FK_67F068BCBF396750 FOREIGN KEY (bouteille_id) REFERENCES bouteille (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE commentaire ADD CONSTRAINT FK_67F068BCA76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE commentaire RENAME INDEX idx_67f068bcf1966394 TO FK_67F068BC1E7650A');
+        $this->addSql('ALTER TABLE liste DROP FOREIGN KEY FK_FCF22AF4A76ED395');
+        $this->addSql('ALTER TABLE liste CHANGE id id BIGINT AUTO_INCREMENT NOT NULL, CHANGE created_at created_at DATETIME DEFAULT \'NULL\', CHANGE updated_at updated_at DATETIME DEFAULT \'NULL\'');
+        $this->addSql('ALTER TABLE liste ADD CONSTRAINT FK_FCF22AF4A76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE messenger_messages CHANGE delivered_at delivered_at DATETIME DEFAULT \'NULL\' COMMENT \'(DC2Type:datetime_immutable)\'');
+        $this->addSql('ALTER TABLE user CHANGE roles roles LONGTEXT NOT NULL COLLATE `utf8mb4_bin`, CHANGE created_at created_at DATETIME DEFAULT \'NULL\', CHANGE updated_at updated_at DATETIME DEFAULT \'NULL\', CHANGE reset_token reset_token VARCHAR(255) DEFAULT \'NULL\'');
+    }
+}

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditer la bouteille {{ bouteille.nom }}{% endblock %}
+
+{% block body %}
+    <body>
+        <header>
+            Éditer la bouteille {{ bouteille.nom }}
+        </header>
+        <main class="nav-margin">
+            <section class="form-ajouter-bouteille">
+                <div class="form-container">
+                    <form action="{{ path('bouteille_edit', { 'id': bouteille.id }) }}" method="POST">
+                        {{ form_widget(form) }}
+                        <button type="submit" class="btn-submit">Enregistrer</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </body>
+{% endblock %}

@@ -1,0 +1,22 @@
+{# templates/admin/user/assign_role.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Assigner un rôle{% endblock %}
+
+{% block body %}
+    <h1>Assigner un rôle à {{ username }}</h1>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    {% if success %}
+        <div class="alert alert-success">{{ success }}</div>
+    {% endif %}
+
+    <form action="{{ path('assign_role', {'username': username}) }}" method="post">
+        <label for="role">Rôle :</label>
+        <input type="text" id="role" name="role" required>
+        <button type="submit" class="btn btn-primary">Assigner</button>
+    </form>
+{% endblock %}

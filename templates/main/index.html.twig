@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vino{% endblock %}
+
+{% block body %}
+    <section class="welcome-section">
+        <div class="welcome-content">
+            <h1>Bienvenue chez Vino!</h1>
+            <p>L'outil le plus simple et efficace pour gérer vos celliers et vos achats SAQ.</p>
+        </div>
+        <picture class="welcome-image-container">
+            <img src="{{ asset('assets/img/img_connexion.jpeg') }}" alt="Bouteille au marché" class="welcome-img">
+        </picture>
+    </section>
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+    {% endblock %}
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if app.user.username == 'Admin' %}
+            <nav class="main-nav">
+                <ul class="nav-admin-list">
+                    <li class="main-nav-item">
+                        <a href="{{ path('admin_index') }}">
+                            <figure class="container-icons-navbar active">
+                                <img src="{{ asset('assets/icons/admin_users_icon.svg') }}" alt="Accueil">
+                                <figcaption>utilisateurs</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="{{ path('bouteille_index') }}">
+                            <figure class="container-icons-navbar">
+                                <img src="{{ asset('assets/icons/add_icon.svg') }}" alt="Recherche">
+                                <figcaption class="icons-label">bouteilles</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="#">
+                            <figure class="container-icons-navbar">
+                                <img src="{{ asset('assets/icons/admin_stats_icon.svg') }}" alt="Liste d'achats">
+                                <figcaption>statistiques</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="#">
+                            <figure class="container-icons-navbar">
+                                <img src="{{ asset('assets/icons/profile_icon.svg') }}" alt="Profil">
+                                <figcaption>profil</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        {% else %}
+            <nav class="main-nav">
+                <ul class="main-nav-list">
+                    <li class="main-nav-item">
+                        <a href="{{ path('main') }}">
+                            <figure class="container-icons-navbar active">
+                                <img src="{{ asset('assets/icons/home_icon.svg') }}" alt="Accueil">
+                                <figcaption>accueil</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="{{ path('bouteille_index') }}">
+                            <figure class="container-icons-navbar">
+                                <img src="{{ asset('assets/icons/add_icon.svg') }}" alt="Recherche">
+                                <figcaption class="icons-label">ajouter</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="{{ path('liste_index') }}">
+                            <figure class="container-icons-navbar">
+                                <img src="{{ asset('assets/icons/list_icon.svg') }}" alt="Liste d'achats">
+                                <figcaption>liste</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="{{ path('cellier_index') }}">
+                            <figure class="container-icons-navbar">
+                                <img src="{{ asset('assets/icons/cellars_icon.svg') }}" alt="Celliers">
+                                <figcaption>celliers</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="{{ path('profil_show', { 'id': app.user.id }) }}">
+                            <figure class="container-icons-navbar">
+                                <img src="{{ asset('assets/icons/profile_icon.svg') }}" alt="Profil">
+                                <figcaption>profil</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
+    {% endif %}
+
+    {% if app.user %}
+        <!-- Si l'utilisateur est connecté -->
+        <p>Vous êtes connecté en tant que {{ app.user.username }}. <a href="{{ path('app_logout') }}">Déconnexion</a></p>
+    {% else %}
+        <!-- Si l'utilisateur n'est pas connecté -->
+        {% include 'security/login.html.twig' %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% if block('recherche') is defined %}
+        {% include 'cellier/recherche.html.twig' %}
+    {% endif %}
+
+    {% if block('show-search') is defined %}
+        {% include 'cellier/show-search.html.twig' %}
+    {% endif %}
+{% endblock %}

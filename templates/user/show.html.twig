@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+    <header>
+        Profil
+    </header>
+    <main class="nav-margin">
+        <section>
+            <h2>Informations utilisateur</h2>
+            <div class="info-profil"><span>Nom d'utilisateur :</span><span class="info-value">{{ user.username }}</span></div>
+            <div class="info-profil"><span>Email :</span><span class="info-value">{{ user.email }}</span></div>
+            <div class="info-profil"><span>Rôles :</span>
+                <ul class="info-value">
+                    {% for role in user.roles %}
+                        <li>{{ role }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="info-profil"><span>Date de création :</span><span class="info-value">{{ user.createdAt|date('d/m/Y H:i:s') }}</span></div>
+            <div class="info-profil"><span>Date de mise à jour :</span><span class="info-value">{{ user.updatedAt|date('d/m/Y H:i:s') }}</span></div>
+        </section>
+    </main>
+{% endblock %}

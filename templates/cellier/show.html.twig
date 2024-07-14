@@ -1,0 +1,88 @@
+{# templates/cellier/show.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail du cellier {{ cellier.nom }}{% endblock %}
+
+{% block body %}
+    <header>
+        <a href="{{ path('cellier_index') }}" class="btn-arrow-top">
+            <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.4247 7C17.977 7 18.4247 7.44772 18.4247 8C18.4247 8.55228 17.977 9 17.4247 9L17.4247 7ZM0.498398 8.70711C0.107874 8.31658 0.107874 7.68342 0.498398 7.29289L6.86236 0.928933C7.25288 0.538409 7.88605 0.538409 8.27657 0.928933C8.6671 1.31946 8.6671 1.95262 8.27657 2.34315L2.61972 8L8.27657 13.6569C8.6671 14.0474 8.6671 14.6805 8.27657 15.0711C7.88605 15.4616 7.25288 15.4616 6.86236 15.0711L0.498398 8.70711ZM17.4247 9L1.20551 9L1.20551 7L17.4247 7L17.4247 9Z" fill="black"/>
+            </svg>
+            Celliers
+        </a>
+    </header>
+    <main class="nav-margin">
+        <h1>{{ cellier.nom }}</h1>
+        <a href="{{ path('bouteille_index') }}" class="btn-arrow btn-round">
+            Ajouter une bouteille
+            <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.83728 7C1.285 7 0.83728 7.44772 0.83728 8C0.83728 8.55228 1.285 9 1.83728 9L1.83728 7ZM18.5986 8.70711C18.9891 8.31658 18.9891 7.68342 18.5986 7.29289L12.2347 0.928933C11.8441 0.538409 11.211 0.538409 10.8205 0.928933C10.4299 1.31946 10.4299 1.95262 10.8205 2.34315L16.4773 8L10.8204 13.6569C10.4299 14.0474 10.4299 14.6805 10.8204 15.0711C11.211 15.4616 11.8441 15.4616 12.2347 15.0711L18.5986 8.70711ZM1.83728 9L17.8915 9L17.8915 7L1.83728 7L1.83728 9Z" fill="white"/>
+            </svg>
+        </a>
+        <div class="form-container">
+            <form action="{{ path('cellier_show', { 'id': cellier.id }) }}" method="get">
+                <div class="form-input-container">
+                    <label for="sortCellier">TRIER</label>
+                    <select id="sortCellier" name="sort">
+                        <option value="name-asc" {{ app.request.query.get('sort') == 'name-asc' ? 'selected' : '' }}>Nom du produit (A-Z)</option>
+                        <option value="name-desc" {{ app.request.query.get('sort') == 'name-desc' ? 'selected' : '' }}>Nom du produit (Z-A)</option>
+                        <option value="price-asc" {{ app.request.query.get('sort') == 'price-asc' ? 'selected' : '' }}>Prix ($-$$$)</option>
+                        <option value="price-desc" {{ app.request.query.get('sort') == 'price-desc' ? 'selected' : '' }}>Prix ($$$-$)</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="card-count">
+            <p>
+                {% if cellier.bouteilleCelliers|length > 0 %}
+                    {{ cellier.bouteilleCelliers|length }} bouteille(s) disponible(s)
+                {% else %}
+                    Aucune bouteille disponible
+                {% endif %}
+            </p>
+        </div>
+        <div class="card-container-stats">
+            <div class="card-container-total">
+                <div>
+                    <span>{{ prixTotal|number_format(2, '.', ' ') }} $</span>
+                </div>
+            </div>
+        </div>
+        {# Vérifiez que 'cellier.bouteilleCelliers' est correctement défini et accessible dans votre entité Cellier #}
+        {% if cellier.bouteilleCelliers is defined %}
+            {% set prixTotal = 0 %}
+            {% for bouteilleCellier in cellier.bouteilleCelliers %}
+                <section class="card-bouteille" id="{{ bouteilleCellier.id }}" data-location="celliers">
+                    <picture>
+                        <img src="{{ bouteilleCellier.bouteille.srcImage }}" alt="{{ bouteilleCellier.bouteille.nom }}">
+                    </picture>
+                    <div class="card-bouteille-content">
+                        <div class="card-bouteille-info">
+                            <a href="{{ path('bouteille_show', { 'id': bouteilleCellier.bouteille.id }) }}">
+                                <h2>{{ bouteilleCellier.bouteille.nom }}</h2>
+                            </a>
+                            <span>
+                                {{ bouteilleCellier.bouteille.type }} | {{ bouteilleCellier.bouteille.format }} | {{ bouteilleCellier.bouteille.pays }}
+                            </span>
+                            <p>
+                                {{ bouteilleCellier.bouteille.prix }} $
+                            </p>
+                        </div>
+                        <div class="card-bouteille-qt">
+                            <button class="btn-decrement">-</button>
+                            <input type="text" value="{{ bouteilleCellier.quantite }}" min="0" readonly>
+                            <button class="btn-increment">+</button>
+                            <form action="" class="form-delete"></form>
+                        </div>
+                    </div>
+                </section>
+                {% set prixTotal = prixTotal + (bouteilleCellier.bouteille.prix * bouteilleCellier.quantite) %}
+            {% endfor %}
+            <div class="card-container-total">
+                <p><strong>Prix total :</strong> {{ prixTotal|number_format(2, '.', ' ') }} $</p>
+            </div>
+        {% endif %}
+    </main>
+{% endblock %}

@@ -1,3 +1,14 @@
+# Configuration générale applicable à tous les environnements
+web_profiler:
+    toolbar: true
+    intercept_redirects: false
+
+framework:
+    profiler: 
+        only_exceptions: false
+        collect_serializer_data: true
+
+# Configuration spécifique à l'environnement de développement
 when@dev:
     web_profiler:
         toolbar: true
@@ -8,6 +19,7 @@ when@dev:
             only_exceptions: false
             collect_serializer_data: true
 
+# Configuration spécifique à l'environnement de test
 when@test:
     web_profiler:
         toolbar: false

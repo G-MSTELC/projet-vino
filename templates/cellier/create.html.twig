@@ -1,0 +1,27 @@
+{# templates/cellier/create.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="form-border nav-margin">
+        <h1 class="form-h1">
+            Ajouter un cellier
+        </h1>
+        <div class="form-container">
+            <form action="{{ path('cellier_create') }}" method="post" id="ajouterCellier">
+                {{ form_start(form) }}
+                <div class="form-input-container">
+                    <label for="nom">Nom du cellier</label>
+                    {{ form_widget(form.nom, {'attr': {'id': 'nom'}}) }}
+                    {% if form_errors(form.nom) %}
+                        <div>{{ form_errors(form.nom) }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-button">
+                    <button type="submit" form="ajouterCellier" class="btn-submit">Créer cellier</button>
+                </div>
+                {{ form_end(form) }}
+            </form>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,43 @@
+{# templates/admin/show-user.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Détails de l'utilisateur</h1>
+
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <td>{{ user.id }}</td>
+        </tr>
+        <tr>
+            <th>Nom d'utilisateur</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>Rôles</th>
+            <td>{{ user.roles|join(', ') }}</td>
+        </tr>
+        <tr>
+            <th>Date de création</th>
+            <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Date de mise à jour</th>
+            <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+    </table>
+
+    <a href="{{ path('admin_edit_user', {'id': user.id}) }}" class="btn btn-warning">Modifier</a>
+    <form action="{{ path('admin_delete_user', {'id': user.id}) }}" method="post" style="display:inline-block;">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+        <button class="btn btn-danger">Supprimer</button>
+    </form>
+
+    <a href="{{ path('admin_users') }}" class="btn btn-secondary">Retour à la liste</a>
+{% endblock %}

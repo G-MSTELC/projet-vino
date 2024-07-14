@@ -1,0 +1,25 @@
+{# templates/cellier/select_bouteille.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Sélectionner une Bouteille{% endblock %}
+
+{% block body %}
+    <h1>Sélectionner une Bouteille pour le Cellier</h1>
+
+    <form method="GET" action="{{ path('bouteille_cellier_ajouter_bouteille', {'id': cellier.id}) }}">
+        <div class="form-group">
+            <label for="bouteille_id">Choisir une Bouteille :</label>
+            <select class="form-control" id="bouteille_id" name="bouteille_id">
+                {% for bouteille in bouteilles %}
+                    <option value="{{ bouteille.id }}">{{ bouteille.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="quantite">Quantité :</label>
+            <input type="number" class="form-control" id="quantite" name="quantite" value="1" min="1">
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter la Bouteille</button>
+    </form>
+{% endblock %}
