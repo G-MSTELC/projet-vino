@@ -192,22 +192,4 @@ profil_show:
     path: /profil/{id}
     controller: 'App\Controller\UserController::show'
     requirements:
-        id: '\d+'# Routes pour les utilisateurs (CRUD)
-admin_users_create:
-    path: /admin/users/create
-    controller: 'App\Controller\UserController::create'
-    methods: ['GET', 'POST']
-
-admin_users_edit:
-    path: /admin/users/{id}/edit
-    controller: 'App\Controller\UserController::edit'
-    methods: ['GET', 'POST']
-    requirements:
-        id: '\d+'
-
-admin_users_delete:
-    path: /admin/users/{id}/delete
-    controller: 'App\Controller\UserController::delete'
-    methods: ['POST']
-    requirements:
         id: '\d+'
